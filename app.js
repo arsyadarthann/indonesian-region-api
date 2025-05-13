@@ -1,14 +1,14 @@
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const app = express();
 
 // Konfigurasi koneksi ke MySQL
 const dbConfig = {
-    host: 'localhost',
+    host: '127.0.0.1',
     user: 'root',
-    password: 'root',
-    database: 'api_wilayah'
+    password: '',
+    database: 'wilayah'
 };
 
 // Buat koneksi ke database
@@ -17,7 +17,7 @@ const connection = mysql.createConnection(dbConfig);
 // Tambahkan rute untuk mendapatkan data provinsi
 app.get('/provinsi', (req, res) => {
     // Query untuk mendapatkan data provinsi
-    const query = 'SELECT * FROM provinsi';
+    const query = 'SELECT * FROM provinsi_kemendagri';
 
     // Lakukan query ke database
     connection.query(query, (error, results) => {
@@ -35,7 +35,7 @@ app.get('/kota/:kode_provinsi', (req, res) => {
     const { kode_provinsi } = req.params;
 
     // Query untuk mendapatkan data kota berdasarkan kode provinsi
-    const query = `SELECT * FROM kota WHERE kode_provinsi = '${kode_provinsi}'`;
+    const query = `SELECT * FROM kota_kemendagri WHERE kode_provinsi = '${kode_provinsi}'`;
 
     // Lakukan query ke database
     connection.query(query, (error, results) => {
@@ -53,7 +53,7 @@ app.get('/kecamatan/:kode_kota', (req, res) => {
     const { kode_kota } = req.params;
 
     // Query untuk mendapatkan data kota berdasarkan kode provinsi
-    const query = `SELECT * FROM kecamatan WHERE kode_kota = '${kode_kota}'`;
+    const query = `SELECT * FROM kecamatan_kemendagri WHERE kode_kota = '${kode_kota}'`;
 
     // Lakukan query ke database
     connection.query(query, (error, results) => {
@@ -71,7 +71,7 @@ app.get('/desa/:kode_kecamatan', (req, res) => {
     const { kode_kecamatan } = req.params;
 
     // Query untuk mendapatkan data kota berdasarkan kode provinsi
-    const query = `SELECT * FROM desa WHERE kode_kecamatan = '${kode_kecamatan}'`;
+    const query = `SELECT * FROM desa_kemendagri WHERE kode_kecamatan = '${kode_kecamatan}'`;
 
     // Lakukan query ke database
     connection.query(query, (error, results) => {
